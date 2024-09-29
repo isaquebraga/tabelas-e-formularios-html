@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Criação de Tabela com Elementos Avançados</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins";
+            background-color: #F5F5F5;
+        }
+
+        main {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+        }
+
+        table caption {
+            background-color: #588157;
+            color: #F5F5F5;
+            font-weight: 700;
+            padding: 1.5rem;
+            margin: auto;
+            margin-bottom: 1rem;
+            border-radius: 20px;
+            border: 0.2rem solid #000000;
+        }
+
+        th,
+        td {
+            border: 0.1rem solid #000000;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #588157;
+            color: #F5F5F5;
+            font-weight: 600;
+            font-size: 1em;
+        }
+
+        td {
+            background-color: #cce3de;
+            font-weight: 500;
+            font-size: 0.8em;
+        }
+
+        .aprovado {
+            background-color: #cce3de;
+        }
+
+        .reprovado {
+            background-color: #f07167;
+        }
+
+        caption {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <table>
+            <caption>Lista de Alunos - Turma 2024.1</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Nota 01</th>
+                    <th scope="col">Nota 02</th>
+                    <th scope="col">Média Final</th>
+                    <th scope="col">Classificação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Ana Oliveira</td>
+                    <td>8.0</td>
+                    <td>8.0</td>
+                    <td>8.0</td>
+                    <td class="aprovado">Aprovado</td>
+                </tr>
+                <tr>
+                    <td>Carlos Mendes</td>
+                    <td>6.5</td>
+                    <td>5.5</td>
+                    <td>6.0</td>
+                    <td class="reprovado">Reprovado</td>
+                </tr>
+                <tr>
+                    <td>Diego Santos</td>
+                    <td>5.0</td>
+                    <td>6.0</td>
+                    <td>5.5</td>
+                    <td class="reprovado">Reprovado</td>
+                </tr>
+                <tr>
+                    <td>Eduarda Lima</td>
+                    <td>9.0</td>
+                    <td>9.0</td>
+                    <td>9.0</td>
+                    <td class="aprovado">Aprovado</td>
+                </tr>
+                <tr>
+                    <td>Fernanda Alves</td>
+                    <td>7.0</td>
+                    <td>7.0</td>
+                    <td>7.0</td>
+                    <td class="aprovado">Aprovado</td>
+                </tr>
+                <tr>
+                    <td>Gabriel Costa</td>
+                    <td>6.8</td>
+                    <td>7.2</td>
+                    <td>7.0</td>
+                    <td class="aprovado">Aprovado</td>
+                </tr>
+                <tr>
+                    <td>João Silva</td>
+                    <td>8.5</td>
+                    <td>7.5</td>
+                    <td>8.0</td>
+                    <td class="aprovado">Aprovado</td>
+                </tr>
+                <tr>
+                    <td>Lucas Ferreira</td>
+                    <td>4.5</td>
+                    <td>5.5</td>
+                    <td>5.0</td>
+                    <td class="reprovado">Reprovado</td>
+                </tr>
+                <tr>
+                    <td>Maria Souza</td>
+                    <td>9.2</td>
+                    <td>8.8</td>
+                    <td>9.0</td>
+                    <td class="aprovado">Aprovado</td>
+                </tr>
+                <tr>
+                    <td>Mariana Rocha</td>
+                    <td>6.0</td>
+                    <td>7.0</td>
+                    <td>6.5</td>
+                    <td class="reprovado">Reprovado</td>
+                </tr>
+                <tr>
+                    <td>Pedro Lima</td>
+                    <td>7.5</td>
+                    <td>8.0</td>
+                    <td>7.8</td>
+                    <td class="aprovado">Aprovado</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+
+</html>
