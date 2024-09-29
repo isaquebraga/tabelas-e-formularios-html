@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário Completo e Validação de Dados</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: "Poppins";
+        }
+
+        main {
+            background-color: #e8e8e8;
+            height: max-content;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 2rem;
+            width: max-content;
+            height: max-content;
+            border-radius: 30px;
+            background: lightgrey;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 50px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 26px -18px inset;
+        }
+
+        .title {
+            font-size: 2em;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1em;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .data {
+            margin-bottom: -10px;
+        }
+
+        .selection {
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        .form-item-selection {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-item-password div {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .form-item-password div img {
+            position: absolute;
+            right: 20px;
+            height: 1.2rem;
+        }
+
+        .form-item input,
+        .gender div label span,
+        .cbx {
+            font-size: 0.8em;
+        }
+
+        #city {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #FFFFFF;
+            font-size: 0.8 rem;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        #city:focus {
+            background-color: #fff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+        }
+
+
+        .options {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+
+        button {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            outline: none;
+            border: 0;
+            vertical-align: middle;
+            text-decoration: none;
+            font-family: inherit;
+            font-size: 1em;
+        }
+
+        button.send {
+            font-weight: 600;
+            color: #382b22;
+            padding: 0.8em;
+            background: #FFF;
+            border: 2px solid #000000;
+            border-radius: 0.75em;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+            -webkit-transition: background 150ms cubic-bezier(0, 0, 0.58, 1), -webkit-transform 150ms cubic-bezier(0, 0, 0.58, 1);
+            transition: transform 150ms cubic-bezier(0, 0, 0.58, 1), background 150ms cubic-bezier(0, 0, 0.58, 1), -webkit-transform 150ms cubic-bezier(0, 0, 0.58, 1);
+        }
+
+        button.send::before {
+            position: absolute;
+            content: '';
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #F1F1F1;
+            border-radius: inherit;
+            -webkit-box-shadow: 0 0 0 2px #000000, 0 0.625em 0 0 #F5F5F5;
+            box-shadow: 0 0 0 2px #000000, 0 0.625em 0 0 #F5F5F5;
+            -webkit-transform: translate3d(0, 0.75em, -1em);
+            transform: translate3d(0, 0.75em, -1em);
+            transition: transform 150ms cubic-bezier(0, 0, 0.58, 1), box-shadow 150ms cubic-bezier(0, 0, 0.58, 1), -webkit-transform 150ms cubic-bezier(0, 0, 0.58, 1), -webkit-box-shadow 150ms cubic-bezier(0, 0, 0.58, 1);
+        }
+
+        button.send:hover {
+            background: #F9F9F9;
+            -webkit-transform: translate(0, 0.25em);
+            transform: translate(0, 0.25em);
+        }
+
+        button.send:hover::before {
+            -webkit-box-shadow: 0 0 0 2px #000000, 0 0.5em 0 0 #F5F5F5;
+            box-shadow: 0 0 0 2px #000000, 0 0.5em 0 0 #F5F5F5;
+            -webkit-transform: translate3d(0, 0.5em, -1em);
+            transform: translate3d(0, 0.5em, -1em);
+        }
+
+        button.send:active {
+            background: #FFFFFF;
+            -webkit-transform: translate(0em, 0.75em);
+            transform: translate(0em, 0.75em);
+        }
+
+        button.send:active::before {
+            -webkit-box-shadow: 0 0 0 2px #000000, 0 0 #F5F5F5;
+            box-shadow: 0 0 0 2px #000000, 0 0 #F5F5F5;
+            -webkit-transform: translate3d(0, 0, -1em);
+            transform: translate3d(0, 0, -1em);
+        }
+
+        .gender {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .city {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .form-end {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .form-init {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .form-init .input {
+            margin: 0.5rem;
+        }
+
+        .input {
+            padding: 0.875rem;
+            font-size: 1rem;
+            border: 1.5px solid #000;
+            border-radius: 0.5rem;
+            box-shadow: 2.5px 3px 0 #000;
+            outline: none;
+            transition: ease 0.25s;
+            height: 3em;
+        }
+
+        .input:focus {
+            box-shadow: 5.5px 7px 0 #fff;
+        }
+
+        .checkbox-wrapper-01 input[type="checkbox"] {
+            display: none;
+            visibility: hidden;
+        }
+
+        .checkbox-wrapper-01 .cbx {
+            margin: auto;
+            -webkit-user-select: none;
+            user-select: none;
+            cursor: pointer;
+        }
+
+        .checkbox-wrapper-01 .cbx span {
+            display: inline-block;
+            vertical-align: middle;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .checkbox-wrapper-01 .cbx span:first-child {
+            position: relative;
+            width: 18px;
+            height: 18px;
+            border-radius: 3px;
+            transform: scale(1);
+            vertical-align: middle;
+            border: 1px solid #9098a9;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox-wrapper-01 .cbx span:first-child svg {
+            position: absolute;
+            top: 3px;
+            left: 2px;
+            fill: none;
+            stroke: #000000;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 16px;
+            stroke-dashoffset: 16px;
+            transition: all 0.3s ease;
+            transition-delay: 0.1s;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .checkbox-wrapper-01 .cbx span:first-child:before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            display: block;
+            transform: scale(0);
+            opacity: 1;
+            border-radius: 50%;
+        }
+
+        .checkbox-wrapper-01 .cbx span:last-child {
+            padding-left: 8px;
+        }
+
+        .checkbox-wrapper-01 .cbx:hover span:first-child {
+            border-color: #000;
+        }
+
+        .checkbox-wrapper-01 .inp-cbx:checked+.cbx span:first-child {
+            background: #FFFFFF;
+            border-color: #000000;
+            animation: wave-01 0.4s ease;
+        }
+
+        .checkbox-wrapper-01 .inp-cbx:checked+.cbx span:first-child svg {
+            stroke-dashoffset: 0;
+        }
+
+        .checkbox-wrapper-01 .inp-cbx:checked+.cbx span:first-child:before {
+            transform: scale(3.5);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        @keyframes wave-01 {
+            50% {
+                transform: scale(0.9);
+            }
+        }
+
+        .checkbox-wrapper-02 input[type="checkbox"] {
+            display: none;
+            visibility: hidden;
+        }
+
+        .checkbox-wrapper-02 .cbx {
+            margin: auto;
+            -webkit-user-select: none;
+            user-select: none;
+            cursor: pointer;
+        }
+
+        .checkbox-wrapper-02 .cbx span {
+            display: inline-block;
+            vertical-align: middle;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .checkbox-wrapper-02 .cbx span:first-child {
+            position: relative;
+            width: 18px;
+            height: 18px;
+            border-radius: 3px;
+            transform: scale(1);
+            vertical-align: middle;
+            border: 1px solid #9098a9;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox-wrapper-02 .cbx span:first-child svg {
+            position: absolute;
+            top: 3px;
+            left: 2px;
+            fill: none;
+            stroke: #000000;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 16px;
+            stroke-dashoffset: 16px;
+            transition: all 0.3s ease;
+            transition-delay: 0.1s;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .checkbox-wrapper-02 .cbx span:first-child:before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: block;
+            transform: scale(0);
+            opacity: 1;
+            border-radius: 50%;
+        }
+
+        .checkbox-wrapper-02 .cbx span:last-child {
+            padding-left: 8px;
+        }
+
+        .checkbox-wrapper-02 .cbx:hover span:first-child {
+            border-color: #000;
+        }
+
+        .checkbox-wrapper-02 .inp-cbx:checked+.cbx span:first-child {
+            background: #FFFFFF;
+            border-color: #000;
+            animation: wave-02 0.4s ease;
+        }
+
+        .checkbox-wrapper-02 .inp-cbx:checked+.cbx span:first-child svg {
+            stroke-dashoffset: 0;
+        }
+
+        .checkbox-wrapper-02 .inp-cbx:checked+.cbx span:first-child:before {
+            transform: scale(3.5);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        @keyframes wave-02 {
+            50% {
+                transform: scale(0.9);
+            }
+        }
+
+        .checkbox-wrapper-03 input[type="checkbox"] {
+            display: none;
+            visibility: hidden;
+        }
+
+        .checkbox-wrapper-03 .cbx {
+            margin: auto;
+            -webkit-user-select: none;
+            user-select: none;
+            cursor: pointer;
+        }
+
+        .checkbox-wrapper-03 .cbx span {
+            display: inline-block;
+            vertical-align: middle;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .checkbox-wrapper-03 .cbx span:first-child {
+            position: relative;
+            width: 18px;
+            height: 18px;
+            border-radius: 3px;
+            transform: scale(1);
+            vertical-align: middle;
+            border: 1px solid #9098a9;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox-wrapper-03 .cbx span:first-child svg {
+            position: absolute;
+            top: 3px;
+            left: 2px;
+            fill: none;
+            stroke: #000000;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 16px;
+            stroke-dashoffset: 16px;
+            transition: all 0.3s ease;
+            transition-delay: 0.1s;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .checkbox-wrapper-03 .cbx span:first-child:before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: block;
+            transform: scale(0);
+            opacity: 1;
+            border-radius: 50%;
+        }
+
+        .checkbox-wrapper-03 .cbx span:last-child {
+            padding-left: 8px;
+        }
+
+        .checkbox-wrapper-03 .cbx:hover span:first-child {
+            border-color: #000;
+        }
+
+        .checkbox-wrapper-03 .inp-cbx:checked+.cbx span:first-child {
+            background: #FFFFFF;
+            border-color: #000;
+            animation: wave-03 0.4s ease;
+        }
+
+        .checkbox-wrapper-03 .inp-cbx:checked+.cbx span:first-child svg {
+            stroke-dashoffset: 0;
+        }
+
+        .checkbox-wrapper-03 .inp-cbx:checked+.cbx span:first-child:before {
+            transform: scale(3.5);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        @keyframes wave-03 {
+            50% {
+                transform: scale(0.9);
+            }
+        }
+
+        .gender :focus {
+            outline: 0;
+            border-color: #000000;
+            box-shadow: 0 0 0 4px #FFFFFF;
+        }
+
+        .gender div {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+            justify-content: center;
+        }
+
+        .gender input[type="radio"] {
+            clip: rect(0 0 0 0);
+            clip-path: inset(100%);
+            height: 1px;
+            overflow: hidden;
+            position: absolute;
+            white-space: nowrap;
+            width: 1px;
+        }
+
+        .gender input[type="radio"]:checked+span {
+            box-shadow: 0 0 0 0.0625em #000000;
+            background-color: #FFFFFF;
+            z-index: 1;
+            color: #000000;
+        }
+
+        .gender label span {
+            display: block;
+            cursor: pointer;
+            background-color: #000000;
+            padding: 0.375em .75em;
+            position: relative;
+            margin-left: .0625em;
+            box-shadow: 0 0 0 0.0625em #000000;
+            letter-spacing: .05em;
+            color: #FFFFFF;
+            text-align: center;
+            transition: background-color .5s ease;
+        }
+
+        .gender label:first-child span {
+            border-radius: .375em 0 0 .375em;
+        }
+
+        .gender label:last-child span {
+            border-radius: 0 .375em .375em 0;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="card">
+            <span class="title">Formulário</span>
+
+            <form>
+                <span class="subtitle data">dados pessoais</span>
+                <div class="form-init">
+                    <div class="form-item">
+                        <label for="name" class="hide">nome:</label>
+                        <input placeholder="nome" class="input" name="name" type="text" />
+                    </div>
+
+                    <div class="form-item">
+                        <label for="enail" class="hide">email:</label>
+                        <input placeholder="e-mail" class="input" name="email" type="email" />
+                    </div>
+
+
+                    <div class="form-item">
+                        <label for="birthday" class="hide">senha:</label>
+                        <input placeholder="data de nascimento" class="input" name="birthday" type="datetime" />
+                    </div>
+
+                    <div class="form-item form-item-password">
+                        <label for="password" class="hide">senha:</label>
+                        <div>
+                            <input placeholder="senha" class="input" name="password" type="password" />
+                            <img id="togglePassword" src="/img/eye.svg" alt="Mostrar Senha" style="cursor: pointer;" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-item form-item-selection">
+                    <span class="subtitle selection">seleção de interesses</span>
+
+                    <div class="options">
+                        <div class="checkbox-wrapper-01">
+                            <input type="checkbox" id="cbx-01" class="inp-cbx" />
+                            <label for="cbx-01" class="cbx"><span>
+                                    <svg viewBox="0 0 12 10" height="10px" width="12px">
+                                        <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                    </svg></span><span>front-end</span>
+                            </label>
+                        </div>
+
+                        <div class="checkbox-wrapper-02">
+                            <input type="checkbox" id="cbx-02" class="inp-cbx" />
+                            <label for="cbx-02" class="cbx"><span>
+                                    <svg viewBox="0 0 12 10" height="10px" width="12px">
+                                        <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                    </svg></span><span>back-end</span>
+                            </label>
+                        </div>
+
+                        <div class="checkbox-wrapper-03">
+                            <input type="checkbox" id="cbx-03" class="inp-cbx" />
+                            <label for="cbx-03" class="cbx"><span>
+                                    <svg viewBox="0 0 12 10" height="10px" width="12px">
+                                        <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                    </svg></span><span>full stack</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-item">
+                    <div class="gender">
+                        <span class="subtitle">gênero</span>
+                        <div>
+                            <label>
+                                <input type="radio" name="radio" checked="" />
+                                <span>feminino</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="radio" />
+                                <span>masculino</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="radio" />
+                                <span>outro</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-item city">
+                    <span class="subtitle">cidade</span>
+                    <select id="city" name="city" required>
+                        <option value="">selecione sua cidade</option>
+                        <option value="cidade1">cidade 1</option>
+                        <option value="cidade2">cidade 2</option>
+                        <option value="cidade3">cidade 3</option>
+                    </select>
+                </div>
+
+                <span class="subtitle subtitle-pedido">pedido</span>
+                <div class="form-end">
+                    <div class="form-item itens">
+                        <label for="itens" class="hide">quantidade de produtos:</label>
+                        <input placeholder="quantidade de produtos" class="input" name="itens" type="number" />
+                    </div>
+
+                    <div class="form-item observations">
+                        <label for="observations" class="hide">observações adicionais:</label>
+                        <input placeholder="observações adicionais" class="input" name="observations" type="text" />
+                    </div>
+                </div>
+
+                <button class="send">
+                    enviar
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        function validateEmail() {
+            const emailField = document.querySelector("input[name='email']");
+            const email = emailField.value;
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!emailPattern.test(email) && email !== "") {
+                alert("E-mail inválido. Por favor, insira um e-mail válido no formato exemplo@dominio.com.");
+                emailField.value = "";
+                emailField.focus();
+            }
+        }
+
+        function validatePassword() {
+            const passwordField = document.querySelector("input[name='password']");
+            const password = passwordField.value;
+
+            if (password.length < 8 && password !== "") {
+                alert("A senha deve ter no mínimo 8 caracteres.");
+                passwordField.value = "";
+                passwordField.focus();
+            }
+        }
+
+        function validateBirthday() {
+            const birthdayField = document.querySelector("input[name='birthday']");
+            const birthday = birthdayField.value;
+
+            const datePattern = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(\d{4})$/;
+
+            if (birthday !== "") {
+                if (!datePattern.test(birthday)) {
+                    alert("Data de nascimento inválida. Por favor, insira uma data no formato DD/MM/AAAA.");
+                    birthdayField.value = "";
+                    birthdayField.focus();
+                    return;
+                }
+
+                const [day, month, year] = birthday.split("/").map(Number);
+                const birthDate = new Date(year, month - 1, day);
+
+                if (birthDate.getFullYear() !== year || birthDate.getMonth() + 1 !== month || birthDate.getDate() !== day) {
+                    alert("Data de nascimento inválida. Por favor, insira uma data válida.");
+                    birthdayField.value = "";
+                    birthdayField.focus();
+                    return;
+                }
+
+                const currentDate = new Date();
+                if (birthDate > currentDate) {
+                    alert("Data de nascimento não pode ser maior que a data atual.");
+                    birthdayField.value = "";
+                    birthdayField.focus();
+                }
+            }
+        }
+
+        document.querySelector("input[name='email']").addEventListener("blur", validateEmail);
+        document.querySelector("input[name='password']").addEventListener("blur", validatePassword);
+        document.querySelector("input[name='birthday']").addEventListener("blur", validateBirthday);
+
+        function validatePassword() {
+            const passwordField = document.querySelector("input[name='password']");
+            const password = passwordField.value;
+
+            if (password.length < 8 && password !== "") {
+                alert("A senha deve ter no mínimo 8 caracteres.");
+                passwordField.value = "";
+                passwordField.focus();
+            }
+        }
+
+        function togglePasswordVisibility() {
+            const passwordField = document.querySelector("input[name='password']");
+            const togglePasswordImg = document.getElementById("togglePassword");
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                togglePasswordImg.src = "img/eye.svg";
+                togglePasswordImg.alt = "Esconder Senha";
+            } else {
+                passwordField.type = "password";
+                togglePasswordImg.src = "img/eye-off.svg";
+                togglePasswordImg.alt = "Mostrar Senha";
+            }
+        }
+
+        document.querySelector("input[name='password']").addEventListener("blur", validatePassword);
+        document.getElementById("togglePassword").addEventListener("click", togglePasswordVisibility);
+    </script>
+
+</body>
+
+</html>
